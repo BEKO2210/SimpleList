@@ -328,6 +328,30 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
+    // WhatsApp Share
+    const whatsappBtn = document.getElementById('whatsapp-btn');
+    whatsappBtn?.addEventListener('click', () => {
+        if (app.items.length === 0) {
+            app.showToast('No items to share', 'info');
+            return;
+        }
+
+        // Format list as text
+        let message = '*Simple List*\n\n';
+        app.items.forEach((item, i) => {
+            const checkbox = item.completed ? '[x]' : '[ ]';
+            message += `${checkbox} ${item.text}\n`;
+        });
+
+        // Add JSON data for import capability
+        const jsonData = JSON.stringify(app.items);
+        message += `\n---\nJSON: ${jsonData}`;
+
+        // Open WhatsApp with the message
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    });
+
     // Register service worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
