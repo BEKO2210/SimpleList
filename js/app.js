@@ -328,29 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = '';
     });
 
-    // WhatsApp Share
-    const whatsappBtn = document.getElementById('whatsapp-btn');
-    whatsappBtn?.addEventListener('click', () => {
-        if (app.items.length === 0) {
-            app.showToast('No items to share', 'info');
-            return;
-        }
-
-        // Format list as text
-        let message = '*Simple List*\n\n';
-        app.items.forEach((item, i) => {
-            const checkbox = item.completed ? '[x]' : '[ ]';
-            message += `${checkbox} ${item.text}\n`;
-        });
-
-        // Add JSON data for import capability
-        const jsonData = JSON.stringify(app.items);
-        message += `\n---\nJSON: ${jsonData}`;
-
-        // Open WhatsApp with the message
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    });
 
     // Register service worker
     if ('serviceWorker' in navigator) {
@@ -359,11 +336,12 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch((err) => console.log('SW registration failed:', err));
     }
 
-    // PWA Install Popup
+    // PWA Install
     let deferredPrompt;
     const installPopup = document.getElementById('install-popup');
     const installBtn = document.getElementById('install-btn');
     const installClose = document.getElementById('install-close');
+    const installPwaBtn = document.getElementById('install-pwa-btn');
 
     // Check if already installed or dismissed
     const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
@@ -373,6 +351,9 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         deferredPrompt = e;
 
+        // Show install button in actions bar
+        installPwaBtn?.classList.remove('hidden');
+
         // Show popup after 3 seconds if not installed and not dismissed
         if (!isInstalled && !isDismissed) {
             setTimeout(() => {
@@ -381,6 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Handle install from popup button
     installBtn?.addEventListener('click', async () => {
         if (!deferredPrompt) return;
 
@@ -389,6 +371,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (outcome === 'accepted') {
             app.showToast('App installed successfully!', 'success');
+            installPwaBtn?.classList.add('hidden');
+        }
+
+        deferredPrompt = null;
+        installPopup?.classList.add('hidden');
+    });
+
+    // Handle install from action bar button
+    installPwaBtn?.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+
+        if (outcome === 'accepted') {
+            app.showToast('App installed successfully!', 'success');
+            installPwaBtn?.classList.add('hidden');
         }
 
         deferredPrompt = null;
@@ -407,4 +406,9 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('installDismissed', 'true');
         }
     });
+
+    // Hide install button if already installed
+    if (isInstalled) {
+        installPwaBtn?.classList.add('hidden');
+    }
 });
