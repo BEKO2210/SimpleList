@@ -299,4 +299,53 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(() => console.log('SW registered'))
             .catch((err) => console.log('SW registration failed:', err));
     }
+
+    // PWA Install Popup
+    let deferredPrompt;
+    const installPopup = document.getElementById('install-popup');
+    const installBtn = document.getElementById('install-btn');
+    const installClose = document.getElementById('install-close');
+
+    // Check if already installed or dismissed
+    const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
+    const isDismissed = localStorage.getItem('installDismissed');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Show popup after 3 seconds if not installed and not dismissed
+        if (!isInstalled && !isDismissed) {
+            setTimeout(() => {
+                installPopup?.classList.remove('hidden');
+            }, 3000);
+        }
+    });
+
+    installBtn?.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+
+        if (outcome === 'accepted') {
+            app.showToast('App installed successfully!', 'success');
+        }
+
+        deferredPrompt = null;
+        installPopup?.classList.add('hidden');
+    });
+
+    installClose?.addEventListener('click', () => {
+        installPopup?.classList.add('hidden');
+        localStorage.setItem('installDismissed', 'true');
+    });
+
+    // Close popup when clicking outside
+    installPopup?.addEventListener('click', (e) => {
+        if (e.target === installPopup) {
+            installPopup.classList.add('hidden');
+            localStorage.setItem('installDismissed', 'true');
+        }
+    });
 });

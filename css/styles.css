@@ -640,6 +640,147 @@ body {
     opacity: 1;
 }
 
+/* Install PWA Popup */
+.install-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    z-index: 9999;
+    animation: slideUp 0.4s ease forwards;
+}
+
+.install-popup.hidden {
+    display: none;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.install-card {
+    background: #000;
+    border: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    min-width: 300px;
+    max-width: 350px;
+    position: relative;
+}
+
+.install-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.install-close:hover {
+    color: #fff;
+}
+
+.install-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.install-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.install-small-text {
+    color: #666;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.install-title {
+    color: #fff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 8px 0;
+}
+
+.install-desc {
+    color: #888;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.install-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.install-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.install-button:hover {
+    background: #000;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.install-button-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.install-button-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+
+.install-button-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.install-button-text span:first-child {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.install-button-text span:last-child {
+    font-size: 14px;
+    font-weight: 700;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .main-title {
