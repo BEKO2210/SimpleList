@@ -6,16 +6,9 @@
 }
 
 :root {
-    --primary-color: #4a6fa5;
-    --secondary-color: #f5f5f5;
-    --success-color: #4caf50;
-    --danger-color: #f44336;
-    --text-color: #333;
-    --bg-color: #fff;
     --shadow: 0 4px 20px rgba(0,0,0,0.3);
     --border-radius: 12px;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --item-height: 60px;
 }
 
 body {
@@ -24,7 +17,7 @@ body {
     color: #fff;
     line-height: 1.6;
     min-height: 100vh;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -42,12 +35,7 @@ body {
     text-align: center;
     color: #fff;
     animation: fadeInScale 0.8s ease-out;
-    text-shadow: 0 4px 20px rgba(255,255,255,0.1);
     max-width: 800px;
-    background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .main-content {
@@ -77,115 +65,84 @@ body {
     }
 }
 
-/* From Uiverse.io by garerim */
+/* Input field */
 .input {
-    margin: 0 auto 2rem;
     display: block;
-    background: #f0f0f0;
-    border: 2px solid #d0d0d0;
+    background: #000;
+    border: 1px solid #fff;
     outline: none;
-    width: 100%;
-    max-width: 500px;
+    flex: 1;
     padding: 12px 20px;
     font-size: 16px;
-    border-radius: 9999px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    color: #333;
+    border-radius: 0;
+    color: #fff;
     transition: all 0.3s ease;
     font-family: inherit;
-    box-sizing: border-box;
 }
 
 .input::placeholder {
-    color: #aaa;
+    color: #666;
 }
 
 .input:focus {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
-                0 0 0 3px rgba(74, 111, 165, 0.5);
-    border-color: var(--primary-color);
+    background: #111;
 }
 
 .input-with-button {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
     max-width: 500px;
     margin: 0 auto 2rem;
+    gap: 0;
 }
 
-/* From Uiverse.io by chintu_2484 */
-.cover {
-    background-color: var(--primary-color);
-    height: 40px;
-    width: 50px;
-    border-radius: 8px;
-    transform: rotateX(13deg);
+/* From Uiverse.io by OnCloud125252 - Plus Button */
+.plusButton {
+    --plus_sideLength: 46px;
+    --plus_topRightTriangleSideLength: 0.9rem;
     position: relative;
-    z-index: 1;
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding-bottom: 8px;
-    box-shadow: 0px 1px 1px 1px rgba(255, 255, 255, 0.3);
-}
-
-.add-3d-button {
+    align-items: center;
+    border: 1px solid white;
+    border-left: none;
+    width: var(--plus_sideLength);
+    min-width: var(--plus_sideLength);
+    height: auto;
+    background-color: #000;
+    overflow: hidden;
     cursor: pointer;
-    border: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-    background-color: #f0f0f0;
-    box-shadow: 0px 4px 0px 0.2px rgba(116, 116, 116, 0.7);
-    height: 36px;
-    width: 46px;
-    border-radius: 6px;
-    transform: rotateX(13deg);
-    z-index: 2;
-    position: relative;
-    transition: all 80ms ease;
-    color: rgba(0, 0, 0, 0.7);
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-.d3wrapper {
-    position: relative;
-    transform-style: preserve-3d;
-    perspective: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
-    height: 40px;
+.plusButton::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 0 var(--plus_topRightTriangleSideLength) var(--plus_topRightTriangleSideLength) 0;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+    transition: 0.2s ease-in-out;
 }
 
-.add-3d-button:active {
-    box-shadow: 0px 2px 0px 0.2px rgba(116, 116, 116, 0);
-    transform: translateY(2.5px) rotateX(13deg);
-    transition: all 80ms ease;
+.plusButton:hover::before {
+    --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
 }
 
-/* Make sure the new button styles don't affect other buttons */
-button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):not(.edit-btn):not(.delete-btn):not(.btn-17) {
-    /* Reset any conflicting styles */
-    background-color: initial;
-    color: initial;
-    border: initial;
-    box-shadow: initial;
-    font-size: initial;
-    padding: initial;
-    border-radius: initial;
+.plusButton > .plusIcon {
+    fill: white;
+    width: calc(var(--plus_sideLength) * 0.5);
+    height: calc(var(--plus_sideLength) * 0.5);
+    z-index: 1;
+    transition: 0.2s ease-in-out;
 }
 
-
-.main-content {
-    max-width: 800px;
-    margin: 2.5rem auto;
-    padding: 1rem;
-    animation: fadeInUp 0.7s ease-out;
+.plusButton:hover > .plusIcon {
+    fill: black;
+    transform: rotate(180deg);
 }
 
 @keyframes fadeInUp {
@@ -196,7 +153,7 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
 .empty-state {
     text-align: center;
     padding: 3rem 1rem;
-    color: #aaa;
+    color: #666;
     animation: float 3s ease-in-out infinite;
 }
 
@@ -210,14 +167,9 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     display: none !important;
 }
 
-.shopping-list {
-    list-style: none;
-    margin-top: 1rem;
-}
-
 .list-item {
     background: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     padding: 0.8rem 0.5rem;
     margin-bottom: 0;
     display: flex;
@@ -228,11 +180,11 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     opacity: 0;
 }
 
-.list-item:nth-child(1) { animation-delay: 0.1s; }
-.list-item:nth-child(2) { animation-delay: 0.2s; }
-.list-item:nth-child(3) { animation-delay: 0.3s; }
-.list-item:nth-child(4) { animation-delay: 0.4s; }
-.list-item:nth-child(5) { animation-delay: 0.5s; }
+.list-item:nth-child(1) { animation-delay: 0.05s; }
+.list-item:nth-child(2) { animation-delay: 0.1s; }
+.list-item:nth-child(3) { animation-delay: 0.15s; }
+.list-item:nth-child(4) { animation-delay: 0.2s; }
+.list-item:nth-child(5) { animation-delay: 0.25s; }
 
 @keyframes slideInLeft {
     from {
@@ -254,81 +206,46 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
         opacity: 0;
         transform: translateX(100px);
         height: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-        margin-bottom: 0;
+        padding: 0;
+        margin: 0;
         overflow: hidden;
     }
 }
 
 .list-item.completed .item-text {
     text-decoration: line-through;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
 }
 
 .list-item.completed {
-    background: transparent;
-    opacity: 0.7;
-}
-
-/* Update the toggler appearance when item is completed */
-.list-item.completed .toggler-item label::after {
-    background-color: #50ac5d !important;
-}
-
-.list-item.completed .toggler-item input:checked + label .path {
-    opacity: 1;
-    stroke: #fff;
-    left: 75%;
-}
-
-.item-toggle-animation {
-    animation: itemToggleEffect 0.3s ease;
-}
-
-@keyframes itemToggleEffect {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
+    opacity: 0.6;
 }
 
 .fade-out {
     animation: fadeOutSlideRight 0.3s ease-out forwards !important;
 }
 
-/* From Uiverse.io by PriyanshuGupta28 - Animated checkbox */
+/* Animated checkbox */
+.checkbox-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+
 .checkbox-wrapper input[type="checkbox"] {
     visibility: hidden;
     display: none;
-}
-
-.checkbox-wrapper *,
-.checkbox-wrapper ::after,
-.checkbox-wrapper ::before {
-    box-sizing: border-box;
-    user-select: none;
-}
-
-.checkbox-wrapper {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    margin-right: 0.5rem;
-    color: #fff;
 }
 
 .checkbox-wrapper .label {
     cursor: pointer;
     display: flex;
     align-items: center;
-}
-
-.checkbox-wrapper .check {
-    width: 28px;
-    height: 28px;
-    position: absolute;
-    opacity: 0;
 }
 
 .checkbox-wrapper .label svg {
@@ -357,6 +274,7 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     color: #fff;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .item-actions {
@@ -372,87 +290,33 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     transform: translateX(0);
 }
 
+/* Show actions on mobile */
+@media (max-width: 768px) {
+    .item-actions {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .item-actions button {
-    background: rgba(255, 255, 255, 0.15);
-    border: none;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     cursor: pointer;
-    font-size: 0.85rem;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
+    font-size: 0.8rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-    color: #333;
-}
-
-.item-actions button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    transform: scale(0);
-    transition: transform 0.3s ease;
-}
-
-.item-actions button:hover::before {
-    transform: scale(1);
+    color: #fff;
 }
 
 .item-actions button:hover {
-    transform: scale(1.1);
-    background-color: rgba(255, 255, 255, 0.25);
-}
-
-.edit-btn {
-    color: #fff;
-}
-
-.delete-btn {
-    color: #fff;
-}
-
-.fab {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #3a5a8a 100%);
-    color: white;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transition: var(--transition);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(74, 111, 165, 0.4); }
-    70% { box-shadow: 0 0 0 12px rgba(74, 111, 165, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(74, 111, 165, 0); }
-}
-
-.fab:hover {
-    transform: scale(1.1) rotate(90deg);
-    box-shadow: 0 8px 25px rgba(74, 111, 165, 0.6);
-}
-
-.fab:active {
-    transform: scale(0.95);
+    background: #fff;
+    color: #000;
+    border-color: #fff;
 }
 
 .actions-container {
@@ -460,143 +324,11 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     justify-content: center;
     gap: 0.8rem;
     flex-wrap: wrap;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     animation: fadeIn 0.8s ease-out;
 }
 
-.btn {
-    padding: 0.5rem 1.2rem;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: var(--transition);
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    color: #333;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, #ffffff, #e0e0e0);
-    z-index: -1;
-    transition: transform 0.5s ease;
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
-.btn:hover::before {
-    transform: scaleX(1);
-}
-
-.btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    color: #333;
-}
-
-.btn:active {
-    transform: translateY(1px);
-}
-
-.btn-primary {
-    background: #f0f0f0;
-    color: #333;
-    border: none;
-}
-
-.btn-secondary {
-    background: #e0e0e0;
-    color: #333;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(5px);
-    animation: fadeIn 0.3s ease-out;
-}
-
-.modal-content {
-    background: #f0f0f0;
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    transform: scale(0.9);
-    animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    position: relative;
-    overflow: hidden;
-}
-
-@keyframes modalPop {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.modal-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #3a5a8a 100%);
-}
-
-.modal-content h2 {
-    margin-bottom: 1.5rem;
-    color: #333;
-    text-align: center;
-    font-weight: 600;
-}
-
-#item-input {
-    width: 100%;
-    padding: 0.9rem 1.2rem;
-    border: 2px solid #d0d0d0;
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
-    background-color: #ffffff;
-    color: #333;
-}
-
-#item-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
-    background-color: white;
-}
-
-/* From Uiverse.io by doniaskima - btn-17 style */
+/* btn-17 style - black/white */
 .btn-17,
 .btn-17 *,
 .btn-17 :after,
@@ -614,9 +346,7 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     background-image: none;
     color: #fff;
     cursor: pointer;
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
-        Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-family: inherit;
     font-size: 0.7rem;
     font-weight: 700;
     line-height: 1.5;
@@ -624,28 +354,11 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
     padding: 0;
     text-transform: uppercase;
-}
-
-.btn-17:disabled {
-    cursor: default;
-}
-
-.btn-17:-moz-focusring {
-    outline: auto;
-}
-
-.btn-17 svg {
-    display: block;
-    vertical-align: middle;
-}
-
-.btn-17 [hidden] {
-    display: none;
+    border: 1px solid #fff;
 }
 
 .btn-17 {
-    border-radius: 99rem;
-    border-width: 2px;
+    border-radius: 0;
     padding: 0.5rem 1.2rem;
     z-index: 0;
 }
@@ -667,15 +380,7 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
 }
 
 .btn-17:hover .text {
-    -webkit-animation: move-up-alternate 0.3s forwards;
     animation: move-up-alternate 0.3s forwards;
-}
-
-@-webkit-keyframes move-up-alternate {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(80%); }
-    51% { transform: translateY(-80%); }
-    to { transform: translateY(0); }
 }
 
 @keyframes move-up-alternate {
@@ -687,23 +392,22 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
 
 .btn-17:after,
 .btn-17:before {
-    --skew: 0.2;
     background: #fff;
     content: "";
     display: block;
     height: 102%;
-    left: calc(-50% - 50% * var(--skew));
+    left: -60%;
     pointer-events: none;
     position: absolute;
     top: -104%;
-    transform: skew(calc(150deg * var(--skew))) translateY(var(--progress, 0));
+    transform: skew(30deg) translateY(var(--progress, 0));
     transition: transform 0.2s ease;
     width: 100%;
 }
 
 .btn-17:after {
     --progress: 0%;
-    left: calc(50% + 50% * var(--skew));
+    left: 60%;
     top: 102%;
     z-index: -1;
 }
@@ -716,63 +420,67 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     --progress: -102%;
 }
 
-/* From Uiverse.io by andrew-demchenk0 */
-.error {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  width: 320px;
-  padding: 12px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-  background: #EF665B;
-  border-radius: 8px;
-  box-shadow: 0px 0px 5px -3px #111;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 10000;
-  animation: slideInRight 0.3s ease-out;
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.modal-content {
+    background: #000;
+    border: 1px solid #fff;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-.error__icon {
-  width: 20px;
-  height: 20px;
-  transform: translateY(-2px);
-  margin-right: 8px;
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
-.error__icon path {
-  fill: #fff;
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Playfair Display', Georgia, serif;
 }
 
-.error__title {
-  font-weight: 500;
-  font-size: 14px;
-  color: #fff;
-  flex-grow: 1;
+#item-input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #fff;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    background: #000;
+    color: #fff;
 }
 
-.error__close {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  margin-left: auto;
+#item-input:focus {
+    outline: none;
+    background: #111;
 }
 
-.error__close path {
-  fill: #fff;
+#item-input::placeholder {
+    color: #666;
 }
 
 .modal-actions {
@@ -781,17 +489,46 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     gap: 1rem;
 }
 
+.btn {
+    padding: 0.6rem 1.5rem;
+    border: 1px solid #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    background: #000;
+    color: #fff;
+}
+
+.btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-primary {
+    background: #fff;
+    color: #000;
+}
+
+.btn-primary:hover {
+    background: #000;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #000;
+    color: #fff;
+}
+
 /* Confirm Dialog */
 .confirm-content {
-    background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+    background: #000;
+    border: 1px solid #fff;
     padding: 2rem;
-    border-radius: 16px;
     width: 90%;
-    max-width: 380px;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
+    max-width: 350px;
     text-align: center;
     animation: confirmPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    border: 1px solid rgba(255,255,255,0.05);
 }
 
 @keyframes confirmPop {
@@ -806,16 +543,16 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
 }
 
 .confirm-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 1.2rem;
-    color: #f0f0f0;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem;
+    color: #fff;
     animation: iconPulse 2s ease-in-out infinite;
 }
 
 @keyframes iconPulse {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 0.7; }
 }
 
 .confirm-icon svg {
@@ -825,17 +562,16 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
 
 .confirm-content h3 {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: #fff;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
 }
 
 .confirm-content p {
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    color: #999;
     margin-bottom: 1.5rem;
-    line-height: 1.5;
 }
 
 .confirm-actions {
@@ -845,52 +581,36 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
 }
 
 .confirm-actions .btn {
-    min-width: 100px;
-    padding: 0.6rem 1.5rem;
+    min-width: 90px;
 }
 
-.confirm-actions .btn-secondary {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.confirm-actions .btn-secondary:hover {
-    background: rgba(255,255,255,0.2);
-}
-
-.confirm-actions .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #3a5a8a 100%);
-    color: #fff;
-    border: none;
-}
-
-/* Smooth toggle animation for list items */
+/* Toggle animation */
 .list-item.completing {
     animation: completeItem 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes completeItem {
     0% { transform: scale(1); }
-    50% { transform: scale(1.03) translateX(5px); }
+    50% { transform: scale(1.02) translateX(3px); }
     100% { transform: scale(1) translateX(0); }
 }
 
 /* Toast notifications */
 .toast {
     position: fixed;
-    bottom: 100px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    padding: 0.8rem 1.2rem;
-    border-radius: 50px;
+    padding: 0.8rem 1.5rem;
     display: flex;
     align-items: center;
     gap: 0.8rem;
     z-index: 10000;
     animation: toastIn 0.3s ease forwards;
-    backdrop-filter: blur(10px);
     font-size: 0.9rem;
+    background: #fff;
+    color: #000;
+    border: none;
 }
 
 @keyframes toastIn {
@@ -904,19 +624,11 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     }
 }
 
-.toast-info {
-    background: rgba(74, 111, 165, 0.9);
-    color: #fff;
-}
-
-.toast-success {
-    background: rgba(76, 175, 80, 0.9);
-    color: #fff;
-}
-
+.toast-info,
+.toast-success,
 .toast-error {
-    background: rgba(244, 67, 54, 0.9);
-    color: #fff;
+    background: #fff;
+    color: #000;
 }
 
 .toast-message {
@@ -929,7 +641,7 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     color: inherit;
     font-size: 1.2rem;
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.6;
     padding: 0;
     line-height: 1;
 }
@@ -938,34 +650,26 @@ button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):no
     opacity: 1;
 }
 
-/* Responsive design */
+/* Responsive */
 @media (max-width: 768px) {
-    .app-header h1 {
-        font-size: 1.4rem;
+    .main-title {
+        font-size: 2rem;
     }
 
     .main-content {
         padding: 0.75rem;
-        margin: 1.5rem auto;
+    }
+
+    .input-with-button {
+        max-width: 100%;
     }
 
     .list-item {
-        padding: 0.9rem;
+        padding: 0.7rem 0.3rem;
     }
 
-    .fab {
-        bottom: 1.5rem;
-        right: 1.5rem;
-        width: 65px;
-        height: 65px;
-        font-size: 1.8rem;
-    }
-
-    .btn {
-        padding: 0.7rem 1.5rem;
-    }
-
-    .modal-content {
+    .modal-content,
+    .confirm-content {
         margin: 1rem;
         padding: 1.5rem;
     }

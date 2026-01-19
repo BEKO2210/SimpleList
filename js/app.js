@@ -12,7 +12,6 @@ class ShoppingListApp {
     initializeElements() {
         this.shoppingListEl = document.getElementById('shopping-list');
         this.emptyStateEl = document.getElementById('empty-state');
-        this.addItemBtn = document.getElementById('add-item-btn');
         this.clearCompletedBtn = document.getElementById('clear-completed');
         this.itemModal = document.getElementById('item-modal');
         this.modalTitle = document.getElementById('modal-title');
@@ -28,7 +27,6 @@ class ShoppingListApp {
     }
 
     bindEvents() {
-        this.addItemBtn.addEventListener('click', () => this.openAddModal());
         this.clearCompletedBtn.addEventListener('click', () => this.handleClearCompleted());
         this.cancelBtn.addEventListener('click', () => this.closeModal());
         this.saveBtn.addEventListener('click', () => this.handleSaveItem());
@@ -105,13 +103,20 @@ class ShoppingListApp {
             </div>
         `;
 
+        const checkboxWrapper = li.querySelector('.checkbox-wrapper');
+        const itemText = li.querySelector('.item-text');
         const editBtn = li.querySelector('.edit-btn');
         const deleteBtn = li.querySelector('.delete-btn');
 
-        li.addEventListener('click', (e) => {
-            if (!e.target.closest('.edit-btn') && !e.target.closest('.delete-btn')) {
-                this.toggleItem(item.id, li);
-            }
+        // Only toggle when clicking checkbox or text
+        checkboxWrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleItem(item.id, li);
+        });
+
+        itemText.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.toggleItem(item.id, li);
         });
 
         editBtn.addEventListener('click', (e) => {
