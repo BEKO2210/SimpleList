@@ -1,4 +1,4 @@
-const CACHE_NAME = 'simple-list-v1';
+const CACHE_NAME = 'simple-list-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -37,9 +37,12 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME)
-          .then((cache) => cache.put(event.request, responseClone));
+        // Only cache http/https requests (not chrome-extension://, etc.)
+        if (response.ok && (event.request.url.startsWith('http://') || event.request.url.startsWith('https://'))) {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME)
+            .then((cache) => cache.put(event.request, responseClone));
+        }
         return response;
       })
       .catch(() => caches.match(event.request))
