@@ -178,6 +178,7 @@ body {
     transform: translateX(0);
     animation: slideInLeft 0.4s ease-out forwards;
     opacity: 0;
+    will-change: transform, opacity;
 }
 
 .list-item:nth-child(1) { animation-delay: 0.05s; }
@@ -223,7 +224,7 @@ body {
 }
 
 .fade-out {
-    animation: fadeOutSlideRight 0.3s ease-out forwards !important;
+    animation: fadeOutSlideRight 0.15s ease-out forwards !important;
 }
 
 /* Animated checkbox */

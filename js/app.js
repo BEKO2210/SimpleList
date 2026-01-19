@@ -45,6 +45,28 @@ class ShoppingListApp {
         this.confirmModal.addEventListener('click', (e) => {
             if (e.target === this.confirmModal) this.closeConfirm(false);
         });
+
+        // Event delegation for list items - single listener instead of per-item
+        this.shoppingListEl.addEventListener('click', (e) => this.handleListClick(e));
+    }
+
+    // Handle all list item clicks via delegation
+    handleListClick(e) {
+        const target = e.target;
+        const listItem = target.closest('.list-item');
+        if (!listItem) return;
+
+        const itemId = listItem.dataset.id;
+
+        // Check what was clicked
+        if (target.closest('.checkbox-wrapper') || target.closest('.item-text')) {
+            this.toggleItem(itemId, listItem);
+        } else if (target.closest('.edit-btn')) {
+            const item = this.items.find(i => i.id === itemId);
+            if (item) this.openEditModal(item);
+        } else if (target.closest('.delete-btn')) {
+            this.deleteItem(itemId, listItem);
+        }
     }
 
     // Custom confirm dialog
@@ -82,10 +104,13 @@ class ShoppingListApp {
         const li = document.createElement('li');
         li.className = `list-item ${item.completed ? 'completed' : ''}`;
         li.dataset.id = item.id;
-        li.style.animationDelay = `${index * 0.05}s`;
+        // Only animate on initial render, not on updates
+        if (index !== undefined) {
+            li.style.animationDelay = `${index * 0.05}s`;
+        }
 
         li.innerHTML = `
-            <div class="checkbox-wrapper" data-id="${item.id}">
+            <div class="checkbox-wrapper">
                 <svg width="28" height="28" viewBox="0 0 95 95" class="checkbox-svg">
                     <rect x="30" y="20" width="50" height="50" stroke="currentColor" fill="transparent" stroke-width="2"></rect>
                     <g transform="translate(0,-952.36222)">
@@ -100,31 +125,7 @@ class ShoppingListApp {
             </div>
         `;
 
-        const checkboxWrapper = li.querySelector('.checkbox-wrapper');
-        const itemText = li.querySelector('.item-text');
-        const editBtn = li.querySelector('.edit-btn');
-        const deleteBtn = li.querySelector('.delete-btn');
-
-        // Only toggle when clicking checkbox or text
-        checkboxWrapper.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleItem(item.id, li);
-        });
-
-        itemText.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleItem(item.id, li);
-        });
-
-        editBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.openEditModal(item);
-        });
-
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.deleteItem(item.id, li);
-        });
+        // No per-item event listeners - using event delegation instead
 
         return li;
     }
@@ -159,22 +160,38 @@ class ShoppingListApp {
 
         if (this.editingItemId) {
             this.items = ShoppingListStorage.updateItem(this.editingItemId, text);
+            // Update text in place instead of full re-render
+            const element = this.shoppingListEl.querySelector(`[data-id="${this.editingItemId}"]`);
+            if (element) {
+                const textEl = element.querySelector('.item-text');
+                if (textEl) textEl.textContent = text;
+            }
         } else {
             this.items = ShoppingListStorage.addItem(text);
+            // Append single item instead of full re-render
+            const newItem = this.items[this.items.length - 1];
+            const element = this.createItemElement(newItem);
+            element.style.animation = 'slideInLeft 0.3s ease-out forwards';
+            this.shoppingListEl.appendChild(element);
+            this.updateEmptyState();
         }
 
         this.closeModal();
-        this.render();
     }
 
     toggleItem(id, element) {
-        // Add completing animation
-        element.classList.add('completing');
+        // Update state immediately
+        this.items = ShoppingListStorage.toggleItem(id);
+        const item = this.items.find(i => i.id === id);
 
-        setTimeout(() => {
-            this.items = ShoppingListStorage.toggleItem(id);
-            this.render();
-        }, 200);
+        // Update DOM directly instead of full re-render
+        if (item) {
+            element.classList.toggle('completed', item.completed);
+            const checkmark = element.querySelector('.path1');
+            if (checkmark) {
+                checkmark.classList.toggle('checked', item.completed);
+            }
+        }
     }
 
     async deleteItem(id, element) {
@@ -182,10 +199,21 @@ class ShoppingListApp {
 
         if (confirmed) {
             element.classList.add('fade-out');
+            // Update state and remove element directly - reduced delay from 300ms to 150ms
             setTimeout(() => {
                 this.items = ShoppingListStorage.deleteItem(id);
-                this.render();
-            }, 300);
+                element.remove();
+                // Only update empty state, not full re-render
+                this.updateEmptyState();
+            }, 150);
+        }
+    }
+
+    updateEmptyState() {
+        if (this.items.length === 0) {
+            this.emptyStateEl.classList.remove('hidden');
+        } else {
+            this.emptyStateEl.classList.add('hidden');
         }
     }
 
@@ -207,15 +235,17 @@ class ShoppingListApp {
             // Animate completed items out
             const completedElements = document.querySelectorAll('.list-item.completed');
             completedElements.forEach((el, i) => {
-                el.style.animationDelay = `${i * 0.05}s`;
+                el.style.animationDelay = `${i * 0.03}s`;
                 el.classList.add('fade-out');
             });
 
+            // Reduced delay from 300ms to 150ms, remove elements directly
             setTimeout(() => {
                 this.items = ShoppingListStorage.clearCompleted();
-                this.render();
+                completedElements.forEach(el => el.remove());
+                this.updateEmptyState();
                 this.showToast('Completed items cleared', 'success');
-            }, 300);
+            }, 150);
         }
     }
 
@@ -255,7 +285,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = headerInput.value.trim();
         if (text) {
             app.items = ShoppingListStorage.addItem(text);
-            app.render();
+            // Append single item instead of full re-render
+            const newItem = app.items[app.items.length - 1];
+            const element = app.createItemElement(newItem);
+            element.style.animation = 'slideInLeft 0.3s ease-out forwards';
+            app.shoppingListEl.appendChild(element);
+            app.updateEmptyState();
             headerInput.value = '';
         }
     };
