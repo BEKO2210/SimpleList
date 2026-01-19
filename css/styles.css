@@ -237,29 +237,19 @@ body {
     cursor: pointer;
 }
 
-.checkbox-wrapper input[type="checkbox"] {
-    visibility: hidden;
-    display: none;
-}
-
-.checkbox-wrapper .label {
+.checkbox-svg {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-}
-
-.checkbox-wrapper .label svg {
     vertical-align: middle;
 }
 
 .checkbox-wrapper .path1 {
     stroke-dasharray: 400;
     stroke-dashoffset: 400;
-    transition: 0.5s stroke-dashoffset;
+    transition: 0.4s stroke-dashoffset ease;
     opacity: 0;
 }
 
-.checkbox-wrapper .check:checked + label svg g path {
+.checkbox-wrapper .path1.checked {
     stroke-dashoffset: 0;
     opacity: 1;
 }
