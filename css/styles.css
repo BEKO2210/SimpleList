@@ -1,0 +1,972 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #f5f5f5;
+    --success-color: #4caf50;
+    --danger-color: #f44336;
+    --text-color: #333;
+    --bg-color: #fff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
+    --border-radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --item-height: 60px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #000;
+    color: #fff;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 100px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.main-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 1.5rem auto 1rem;
+    text-align: center;
+    color: #fff;
+    animation: fadeInScale 0.8s ease-out;
+    text-shadow: 0 4px 20px rgba(255,255,255,0.1);
+    max-width: 800px;
+    background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.main-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    animation: fadeInUp 0.7s ease-out;
+}
+
+.shopping-list {
+    list-style: none;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* From Uiverse.io by garerim */
+.input {
+    margin: 0 auto 2rem;
+    display: block;
+    background: #f0f0f0;
+    border: 2px solid #d0d0d0;
+    outline: none;
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #333;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.input::placeholder {
+    color: #aaa;
+}
+
+.input:focus {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                0 0 0 3px rgba(74, 111, 165, 0.5);
+    border-color: var(--primary-color);
+}
+
+.input-with-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+}
+
+/* From Uiverse.io by chintu_2484 */
+.cover {
+    background-color: var(--primary-color);
+    height: 40px;
+    width: 50px;
+    border-radius: 8px;
+    transform: rotateX(13deg);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 8px;
+    box-shadow: 0px 1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.add-3d-button {
+    cursor: pointer;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    background-color: #f0f0f0;
+    box-shadow: 0px 4px 0px 0.2px rgba(116, 116, 116, 0.7);
+    height: 36px;
+    width: 46px;
+    border-radius: 6px;
+    transform: rotateX(13deg);
+    z-index: 2;
+    position: relative;
+    transition: all 80ms ease;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.d3wrapper {
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    height: 40px;
+}
+
+.add-3d-button:active {
+    box-shadow: 0px 2px 0px 0.2px rgba(116, 116, 116, 0);
+    transform: translateY(2.5px) rotateX(13deg);
+    transition: all 80ms ease;
+}
+
+/* Make sure the new button styles don't affect other buttons */
+button:not(.add-3d-button):not(.btn):not(.popup-close):not(.button):not(.fab):not(.edit-btn):not(.delete-btn):not(.btn-17) {
+    /* Reset any conflicting styles */
+    background-color: initial;
+    color: initial;
+    border: initial;
+    box-shadow: initial;
+    font-size: initial;
+    padding: initial;
+    border-radius: initial;
+}
+
+
+.main-content {
+    max-width: 800px;
+    margin: 2.5rem auto;
+    padding: 1rem;
+    animation: fadeInUp 0.7s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #aaa;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.shopping-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.list-item {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 0.5rem;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    transform: translateX(0);
+    animation: slideInLeft 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+.list-item:nth-child(1) { animation-delay: 0.1s; }
+.list-item:nth-child(2) { animation-delay: 0.2s; }
+.list-item:nth-child(3) { animation-delay: 0.3s; }
+.list-item:nth-child(4) { animation-delay: 0.4s; }
+.list-item:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOutSlideRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100px);
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+}
+
+.list-item.completed .item-text {
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.list-item.completed {
+    background: transparent;
+    opacity: 0.7;
+}
+
+/* Update the toggler appearance when item is completed */
+.list-item.completed .toggler-item label::after {
+    background-color: #50ac5d !important;
+}
+
+.list-item.completed .toggler-item input:checked + label .path {
+    opacity: 1;
+    stroke: #fff;
+    left: 75%;
+}
+
+.item-toggle-animation {
+    animation: itemToggleEffect 0.3s ease;
+}
+
+@keyframes itemToggleEffect {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.fade-out {
+    animation: fadeOutSlideRight 0.3s ease-out forwards !important;
+}
+
+/* From Uiverse.io by PriyanshuGupta28 - Animated checkbox */
+.checkbox-wrapper input[type="checkbox"] {
+    visibility: hidden;
+    display: none;
+}
+
+.checkbox-wrapper *,
+.checkbox-wrapper ::after,
+.checkbox-wrapper ::before {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.checkbox-wrapper {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin-right: 0.5rem;
+    color: #fff;
+}
+
+.checkbox-wrapper .label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-wrapper .check {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    opacity: 0;
+}
+
+.checkbox-wrapper .label svg {
+    vertical-align: middle;
+}
+
+.checkbox-wrapper .path1 {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    transition: 0.5s stroke-dashoffset;
+    opacity: 0;
+}
+
+.checkbox-wrapper .check:checked + label svg g path {
+    stroke-dashoffset: 0;
+    opacity: 1;
+}
+
+.item-text {
+    flex-grow: 1;
+    font-size: 1rem;
+    word-break: break-word;
+    transition: all 0.3s ease;
+    font-weight: 400;
+    margin: 0 0.8rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.item-actions {
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+}
+
+.list-item:hover .item-actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.item-actions button {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    color: #333;
+}
+
+.item-actions button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+}
+
+.item-actions button:hover::before {
+    transform: scale(1);
+}
+
+.item-actions button:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.edit-btn {
+    color: #fff;
+}
+
+.delete-btn {
+    color: #fff;
+}
+
+.fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #3a5a8a 100%);
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: var(--transition);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(74, 111, 165, 0.4); }
+    70% { box-shadow: 0 0 0 12px rgba(74, 111, 165, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 111, 165, 0); }
+}
+
+.fab:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 8px 25px rgba(74, 111, 165, 0.6);
+}
+
+.fab:active {
+    transform: scale(0.95);
+}
+
+.actions-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.btn {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #ffffff, #e0e0e0);
+    z-index: -1;
+    transition: transform 0.5s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.btn:hover::before {
+    transform: scaleX(1);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    color: #333;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+}
+
+.btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background: #f0f0f0;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    transform: scale(0.9);
+    animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #3a5a8a 100%);
+}
+
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+}
+
+#item-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 2px solid #d0d0d0;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+    color: #333;
+}
+
+#item-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+    background-color: white;
+}
+
+/* From Uiverse.io by doniaskima - btn-17 style */
+.btn-17,
+.btn-17 *,
+.btn-17 :after,
+.btn-17 :before,
+.btn-17:after,
+.btn-17:before {
+    border: 0 solid;
+    box-sizing: border-box;
+}
+
+.btn-17 {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: button;
+    background-color: #000;
+    background-image: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+        Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0;
+    -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+    padding: 0;
+    text-transform: uppercase;
+}
+
+.btn-17:disabled {
+    cursor: default;
+}
+
+.btn-17:-moz-focusring {
+    outline: auto;
+}
+
+.btn-17 svg {
+    display: block;
+    vertical-align: middle;
+}
+
+.btn-17 [hidden] {
+    display: none;
+}
+
+.btn-17 {
+    border-radius: 99rem;
+    border-width: 2px;
+    padding: 0.5rem 1.2rem;
+    z-index: 0;
+}
+
+.btn-17,
+.btn-17 .text-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.btn-17 .text-container {
+    display: block;
+    mix-blend-mode: difference;
+}
+
+.btn-17 .text {
+    display: block;
+    position: relative;
+}
+
+.btn-17:hover .text {
+    -webkit-animation: move-up-alternate 0.3s forwards;
+    animation: move-up-alternate 0.3s forwards;
+}
+
+@-webkit-keyframes move-up-alternate {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(80%); }
+    51% { transform: translateY(-80%); }
+    to { transform: translateY(0); }
+}
+
+@keyframes move-up-alternate {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(80%); }
+    51% { transform: translateY(-80%); }
+    to { transform: translateY(0); }
+}
+
+.btn-17:after,
+.btn-17:before {
+    --skew: 0.2;
+    background: #fff;
+    content: "";
+    display: block;
+    height: 102%;
+    left: calc(-50% - 50% * var(--skew));
+    pointer-events: none;
+    position: absolute;
+    top: -104%;
+    transform: skew(calc(150deg * var(--skew))) translateY(var(--progress, 0));
+    transition: transform 0.2s ease;
+    width: 100%;
+}
+
+.btn-17:after {
+    --progress: 0%;
+    left: calc(50% + 50% * var(--skew));
+    top: 102%;
+    z-index: -1;
+}
+
+.btn-17:hover:before {
+    --progress: 100%;
+}
+
+.btn-17:hover:after {
+    --progress: -102%;
+}
+
+/* From Uiverse.io by andrew-demchenk0 */
+.error {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  background: #EF665B;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px -3px #111;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.error__icon {
+  width: 20px;
+  height: 20px;
+  transform: translateY(-2px);
+  margin-right: 8px;
+}
+
+.error__icon path {
+  fill: #fff;
+}
+
+.error__title {
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+  flex-grow: 1;
+}
+
+.error__close {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.error__close path {
+  fill: #fff;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Confirm Dialog */
+.confirm-content {
+    background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+    padding: 2rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
+    text-align: center;
+    animation: confirmPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+@keyframes confirmPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.confirm-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.2rem;
+    color: #f0f0f0;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.confirm-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.confirm-content h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.8rem;
+}
+
+.confirm-content p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+.confirm-actions .btn {
+    min-width: 100px;
+    padding: 0.6rem 1.5rem;
+}
+
+.confirm-actions .btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.confirm-actions .btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.confirm-actions .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #3a5a8a 100%);
+    color: #fff;
+    border: none;
+}
+
+/* Smooth toggle animation for list items */
+.list-item.completing {
+    animation: completeItem 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes completeItem {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03) translateX(5px); }
+    100% { transform: scale(1) translateX(0); }
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    padding: 0.8rem 1.2rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    z-index: 10000;
+    animation: toastIn 0.3s ease forwards;
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.toast-info {
+    background: rgba(74, 111, 165, 0.9);
+    color: #fff;
+}
+
+.toast-success {
+    background: rgba(76, 175, 80, 0.9);
+    color: #fff;
+}
+
+.toast-error {
+    background: rgba(244, 67, 54, 0.9);
+    color: #fff;
+}
+
+.toast-message {
+    flex-grow: 1;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    padding: 0;
+    line-height: 1;
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .app-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .main-content {
+        padding: 0.75rem;
+        margin: 1.5rem auto;
+    }
+
+    .list-item {
+        padding: 0.9rem;
+    }
+
+    .fab {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 65px;
+        height: 65px;
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.5rem;
+    }
+
+    .modal-content {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+}

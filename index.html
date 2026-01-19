@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Simple List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+    <div class="main-content">
+        <h1 class="main-title">Simple List</h1>
+        <div class="input-with-button">
+            <input placeholder="Add item..." class="input" name="addItem" type="text" id="header-input">
+            <div class="d3wrapper">
+                <div class="cover">
+                    <button id="add-item-submit" class="add-3d-button">ADD</button>
+                </div>
+            </div>
+        </div>
+        <div id="empty-state" class="empty-state hidden">
+            <p>Your shopping list is empty</p>
+            <p>Add items using the + button</p>
+        </div>
+
+        <ul id="shopping-list" class="shopping-list"></ul>
+        
+        <div class="actions-container">
+            <button id="clear-completed" class="btn-17">
+                <span class="text-container">
+                    <span class="text">Clear</span>
+                </span>
+            </button>
+            <button id="export-btn" class="btn-17">
+                <span class="text-container">
+                    <span class="text">Export</span>
+                </span>
+            </button>
+            <button id="import-btn" class="btn-17">
+                <span class="text-container">
+                    <span class="text">Import</span>
+                </span>
+            </button>
+            <input type="file" id="import-file" accept=".json" style="display: none;">
+        </div>
+    </div>
+
+    <button id="add-item-btn" class="fab" aria-label="Add Item">+</button>
+
+    <!-- Add/Edit Item Modal -->
+    <div id="item-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title">Add Item</h2>
+            <input type="text" id="item-input" placeholder="Enter item name" maxlength="100">
+            <div class="modal-actions">
+                <button id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button id="save-btn" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Dialog Modal -->
+    <div id="confirm-modal" class="modal hidden">
+        <div class="confirm-content">
+            <div class="confirm-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <h3 id="confirm-title">Are you sure?</h3>
+            <p id="confirm-message"></p>
+            <div class="confirm-actions">
+                <button id="confirm-cancel" class="btn btn-secondary">Cancel</button>
+                <button id="confirm-ok" class="btn btn-primary">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
