@@ -11,10 +11,17 @@ class ShoppingListStorage {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     }
 
+    static generateId() {
+        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+            return crypto.randomUUID();
+        }
+        return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+    }
+
     static addItem(item) {
         const items = this.getItems();
         items.push({
-            id: Date.now().toString(),
+            id: this.generateId(),
             text: item,
             completed: false,
             createdAt: new Date().toISOString()
@@ -51,6 +58,13 @@ class ShoppingListStorage {
 
     static clearCompleted() {
         const items = this.getItems().filter(item => !item.completed);
+        this.saveItems(items);
+        return items;
+    }
+
+    static removeItemsByIds(ids) {
+        const idSet = ids instanceof Set ? ids : new Set(ids);
+        const items = this.getItems().filter(item => !idSet.has(item.id));
         this.saveItems(items);
         return items;
     }
