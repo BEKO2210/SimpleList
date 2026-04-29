@@ -3,12 +3,19 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 :root {
     --shadow: 0 4px 20px rgba(0,0,0,0.3);
     --border-radius: 12px;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+html, body {
+    /* Kill the Android pull-to-refresh / iOS rubber-band reload so it feels like an app. */
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
 }
 
 body {
@@ -19,6 +26,18 @@ body {
     min-height: 100vh;
     padding-bottom: 50px;
     animation: fadeIn 0.5s ease-out;
+    /* Prevent double-tap zoom and text-selection in chrome-less app shell. */
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Inputs must keep selection / native touch behavior. */
+input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: default;
 }
 
 @keyframes fadeIn {
