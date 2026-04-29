@@ -97,12 +97,27 @@ jobs:
       - name: Locate generated artifacts
         id: artifacts
         run: |
-          APK=$(find . -maxdepth 3 -name "*.apk" -not -path "./node_modules/*" | head -1)
-          AAB=$(find . -maxdepth 3 -name "*.aab" -not -path "./node_modules/*" | head -1)
-          echo "Found APK: $APK"
-          echo "Found AAB: $AAB"
+          # Bubblewrap emits both app-release-unsigned.apk (gradle) and
+          # app-release-signed.apk (bubblewrap-signed). We MUST pick the
+          # signed one or Android will refuse to install it.
+          APK=$(find . -maxdepth 5 -name "*-signed.apk" -not -path "./node_modules/*" | head -1)
+          if [ -z "$APK" ]; then
+            echo "::error::No signed APK produced. Bubblewrap signing step likely failed."
+            echo "Found APKs:"
+            find . -name "*.apk" -not -path "./node_modules/*"
+            exit 1
+          fi
+          AAB=$(find . -maxdepth 5 -name "*.aab" -not -path "./node_modules/*" | head -1)
+          echo "Signed APK: $APK"
+          echo "AAB:        $AAB"
           echo "apk=$APK" >> "$GITHUB_OUTPUT"
           echo "aab=$AAB" >> "$GITHUB_OUTPUT"
+
+      - name: Verify APK signature
+        run: |
+          BUILD_TOOLS=$(ls -1d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          echo "Using build-tools at: $BUILD_TOOLS"
+          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "${{ steps.artifacts.outputs.apk }}"
 
       - name: Upload APK
         if: steps.artifacts.outputs.apk != ''
