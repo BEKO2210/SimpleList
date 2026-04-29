@@ -72,6 +72,12 @@ class ShoppingListApp {
     // Custom confirm dialog
     showConfirm(message) {
         return new Promise((resolve) => {
+            // Resolve any pending confirm so its promise doesn't leak.
+            if (this.confirmCallback) {
+                const previous = this.confirmCallback;
+                this.confirmCallback = null;
+                previous(false);
+            }
             this.confirmMessage.textContent = message;
             this.confirmModal.classList.remove('hidden');
             this.confirmCallback = resolve;
@@ -128,14 +134,6 @@ class ShoppingListApp {
         // No per-item event listeners - using event delegation instead
 
         return li;
-    }
-
-    openAddModal() {
-        this.editingItemId = null;
-        this.modalTitle.textContent = 'Add Item';
-        this.itemInput.value = '';
-        this.itemModal.classList.remove('hidden');
-        setTimeout(() => this.itemInput.focus(), 100);
     }
 
     openEditModal(item) {
@@ -232,17 +230,22 @@ class ShoppingListApp {
         const confirmed = await this.showConfirm(message);
 
         if (confirmed) {
-            // Animate completed items out
-            const completedElements = document.querySelectorAll('.list-item.completed');
-            completedElements.forEach((el, i) => {
-                el.style.animationDelay = `${i * 0.03}s`;
-                el.classList.add('fade-out');
+            // Snapshot the IDs at click time so toggles during the animation
+            // can't desync DOM and storage.
+            const idsToRemove = new Set(completedItems.map(item => item.id));
+            const elementsToRemove = [];
+            idsToRemove.forEach(id => {
+                const el = this.shoppingListEl.querySelector(`[data-id="${id}"]`);
+                if (el) {
+                    el.style.animationDelay = `${elementsToRemove.length * 0.03}s`;
+                    el.classList.add('fade-out');
+                    elementsToRemove.push(el);
+                }
             });
 
-            // Reduced delay from 300ms to 150ms, remove elements directly
             setTimeout(() => {
-                this.items = ShoppingListStorage.clearCompleted();
-                completedElements.forEach(el => el.remove());
+                this.items = ShoppingListStorage.removeItemsByIds(idsToRemove);
+                elementsToRemove.forEach(el => el.remove());
                 this.updateEmptyState();
                 this.showToast('Completed items cleared', 'success');
             }, 150);
@@ -255,14 +258,21 @@ class ShoppingListApp {
 
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
-        toast.innerHTML = `
-            <span class="toast-message">${message}</span>
-            <button class="toast-close">&times;</button>
-        `;
+
+        const messageSpan = document.createElement('span');
+        messageSpan.className = 'toast-message';
+        messageSpan.textContent = message;
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'toast-close';
+        closeBtn.setAttribute('aria-label', 'Close');
+        closeBtn.textContent = '×';
+        closeBtn.addEventListener('click', () => toast.remove());
+
+        toast.appendChild(messageSpan);
+        toast.appendChild(closeBtn);
 
         document.body.appendChild(toast);
-
-        toast.querySelector('.toast-close').addEventListener('click', () => toast.remove());
         setTimeout(() => toast.remove(), 3000);
     }
 
@@ -320,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     app.render();
                     app.showToast('Data imported successfully!', 'success');
                 } catch (error) {
-                    app.showToast('Error importing data', 'error');
+                    app.showToast(error.message || 'Error importing data', 'error');
                 }
             };
             reader.readAsText(file);
