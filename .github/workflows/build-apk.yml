@@ -39,6 +39,19 @@ jobs:
       - name: Install Bubblewrap CLI
         run: npm install -g @bubblewrap/cli@latest
 
+      - name: Pre-configure Bubblewrap (skip interactive JDK/SDK prompt)
+        run: |
+          mkdir -p "$HOME/.bubblewrap"
+          cat > "$HOME/.bubblewrap/config.json" <<EOF
+          {
+            "jdkPath": "${JAVA_HOME}",
+            "androidSdkPath": "${ANDROID_HOME}"
+          }
+          EOF
+          echo "JAVA_HOME=$JAVA_HOME"
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          cat "$HOME/.bubblewrap/config.json"
+
       - name: Generate signing keystore
         run: |
           keytool -genkeypair -v \
