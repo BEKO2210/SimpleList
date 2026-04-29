@@ -1,0 +1,95 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'manifest.json'
+      - 'index.html'
+      - 'css/**'
+      - 'js/**'
+      - 'icons/**'
+      - 'twa-manifest.json'
+      - '.github/workflows/build-apk.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Bubblewrap CLI
+        run: npm install -g @bubblewrap/cli@latest
+
+      - name: Generate signing keystore
+        run: |
+          keytool -genkeypair -v \
+            -keystore android.keystore \
+            -alias android \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass android -keypass android \
+            -dname "CN=SimpleList, OU=Dev, O=BEKO2210, L=NA, ST=NA, C=DE"
+
+      - name: Generate Android project from twa-manifest.json
+        run: bubblewrap update --skipVersionUpgrade
+        env:
+          BUBBLEWRAP_KEYSTORE_PASSWORD: android
+          BUBBLEWRAP_KEY_PASSWORD: android
+
+      - name: Build APK
+        run: bubblewrap build --skipPwaValidation
+        env:
+          BUBBLEWRAP_KEYSTORE_PASSWORD: android
+          BUBBLEWRAP_KEY_PASSWORD: android
+
+      - name: Locate generated artifacts
+        id: artifacts
+        run: |
+          APK=$(find . -maxdepth 3 -name "*.apk" -not -path "./node_modules/*" | head -1)
+          AAB=$(find . -maxdepth 3 -name "*.aab" -not -path "./node_modules/*" | head -1)
+          echo "Found APK: $APK"
+          echo "Found AAB: $AAB"
+          echo "apk=$APK" >> "$GITHUB_OUTPUT"
+          echo "aab=$AAB" >> "$GITHUB_OUTPUT"
+
+      - name: Upload APK
+        if: steps.artifacts.outputs.apk != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: SimpleList-APK
+          path: ${{ steps.artifacts.outputs.apk }}
+          if-no-files-found: error
+
+      - name: Upload AAB
+        if: steps.artifacts.outputs.aab != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: SimpleList-AAB
+          path: ${{ steps.artifacts.outputs.aab }}
+          if-no-files-found: warn
+
+      - name: Create release on tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ steps.artifacts.outputs.apk }}
+            ${{ steps.artifacts.outputs.aab }}
