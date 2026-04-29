@@ -36,11 +36,32 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Setup Android SDK (with cmdline-tools/latest)
+        uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: 11076708
+
+      - name: Install required Android SDK packages
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+
       - name: Install Bubblewrap CLI
         run: npm install -g @bubblewrap/cli@latest
 
       - name: Pre-configure Bubblewrap (skip interactive JDK/SDK prompt)
         run: |
+          # Bubblewrap requires cmdline-tools/latest/bin/sdkmanager.
+          # If the runner only has cmdline-tools/<version>/, symlink it.
+          if [ ! -d "$ANDROID_HOME/cmdline-tools/latest" ]; then
+            VER=$(ls -1 "$ANDROID_HOME/cmdline-tools" 2>/dev/null | grep -v '^latest$' | sort -V | tail -1)
+            if [ -n "$VER" ]; then
+              ln -sfn "$ANDROID_HOME/cmdline-tools/$VER" "$ANDROID_HOME/cmdline-tools/latest"
+            fi
+          fi
+          ls -la "$ANDROID_HOME/cmdline-tools/" || true
+          ls "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" || true
+
           mkdir -p "$HOME/.bubblewrap"
           cat > "$HOME/.bubblewrap/config.json" <<EOF
           {
