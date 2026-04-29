@@ -1,4 +1,4 @@
-const CACHE_NAME = 'simple-list-v4';
+const CACHE_NAME = 'simple-list-v5';
 const urlsToCache = [
   './',
   './index.html',
