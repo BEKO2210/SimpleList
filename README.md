@@ -8,10 +8,10 @@
 
 [![PWA](https://img.shields.io/badge/PWA-ready-000?style=for-the-badge&labelColor=000)](https://beko2210.github.io/SimpleList)
 [![License](https://img.shields.io/badge/license-MIT-000?style=for-the-badge&labelColor=000)](LICENSE)
-[![APK Build](https://img.shields.io/github/actions/workflow/status/BEKO2210/SimpleList/build-apk.yml?branch=main&label=APK%20Build&style=for-the-badge&labelColor=000&color=000)](../../actions/workflows/build-apk.yml)
+[![APK Build](https://img.shields.io/github/actions/workflow/status/BEKO2210/SimpleList/build-apk.yml?branch=main&label=APK%20Build&style=for-the-badge&labelColor=000&color=000)]([../../actions/workflows/build-apk.yml](https://github.com/BEKO2210/SimpleList/actions/runs/25119486117/artifacts/6711759698))
 [![Release](https://img.shields.io/github/v/release/BEKO2210/SimpleList?label=Release&style=for-the-badge&labelColor=000&color=000)](../../releases/latest)
 
-[**Live Demo**](https://beko2210.github.io/SimpleList) · [**Download APK**](../../releases/latest) · [**Report a bug**](../../issues/new)
+[**Live Demo**](https://beko2210.github.io/SimpleList) · [**Download APK**]([../../releases/latest](https://github.com/BEKO2210/SimpleList/actions/runs/25119486117/artifacts/6711759698)) · [**Report a bug**](../../issues/new)
 
 </div>
 
